@@ -46,6 +46,11 @@ const Footer = () => {
       </Box>
       <Box className={classes.bottom}>
         <Box className={classes.left}>
+          <img
+            src="../../../public/img/logo.jpg"
+            alt=""
+            className={classes.logoImg}
+          />
           <span className={classes.logo}>Classy Closet</span>
           <span className={classes.copyright}>
             {" "}
