@@ -5,7 +5,8 @@ import classes from "./Card.module.css";
 
 const Card = ({ item }) => {
   const getPercentageOff = (item) => {
-    const percentOff = ((item.oldPrice - item.newPrice) / item.oldPrice) * 100;
+    const oldPrice = parseInt(item.price) + 20;
+    const percentOff = (20 / oldPrice) * 100;
     return parseInt(percentOff);
   };
 
@@ -13,27 +14,41 @@ const Card = ({ item }) => {
     <Link className="link" to={`/product/${item.id}`}>
       <div className={classes.productCard}>
         <div className={classes.productImgBlock}>
-          {item.isNew && <span>New Arrival</span>}
-          <img src={item.img} alt={item.title} className={classes.mainImg} />
-          {item.img2 && (
+          {item?.attributes?.isNew && <span>New Arrival</span>}
+          <img
+            src={
+              import.meta.env.VITE_REACT_UPLOAD_URL +
+              item?.attributes?.img.data.attributes.url
+            }
+            alt={item?.attributes?.title}
+            className={classes.mainImg}
+          />
+          {item?.attributes?.img2 && (
             <img
-              src={item.img2}
-              alt={item.title}
+              src={
+                import.meta.env.VITE_REACT_UPLOAD_URL +
+                item?.attributes?.img2.data.attributes.url
+              }
+              alt={item?.attributes?.title}
               className={classes.secondImg}
             />
           )}
         </div>
 
         <div className={classes.productDetails}>
-          <h5>{item.title}</h5>
+          <h5>{item?.attributes?.title}</h5>
           <div className={classes.productPricing}>
-            <span className={classes.newPrice}>$ {item.newPrice}</span>
+            <span className={classes.newPrice}>
+              $ {item?.attributes?.price}
+            </span>
 
             {!item.isNew && (
               <>
-                <span className={classes.originalPrice}>$ {item.oldPrice}</span>
+                <span className={classes.originalPrice}>
+                  $ {item?.attributes?.price + 20}
+                </span>
                 <span class={classes["percentage-off"]}>
-                  {getPercentageOff(item)} OFF
+                  {getPercentageOff(item.attributes)} % OFF
                 </span>
               </>
             )}

@@ -1,4 +1,5 @@
 import React from "react";
+import useFetch from "../../hooks/useFetch";
 
 import classes from "./FeaturedProducts.module.css";
 import Card from "../Card/Card";
@@ -39,6 +40,10 @@ const data = [
 ];
 
 const FeaturedProducts = ({ type }) => {
+  const { data, loading, error } = useFetch(
+    `/products?populate=*&[filters][type][$eq]=${type}`
+  );
+
   return (
     <div className={classes.featuredProducts}>
       <div className={classes.top}>
@@ -51,9 +56,11 @@ const FeaturedProducts = ({ type }) => {
         </p>
       </div>
       <div className={classes.bottom}>
-        {data.map((item) => (
-          <Card item={item} key={item.id} />
-        ))}
+        {error
+          ? "Something went wrong."
+          : loading
+          ? "loading"
+          : data?.map((item) => <Card item={item} key={item.id} />)}
       </div>
     </div>
   );

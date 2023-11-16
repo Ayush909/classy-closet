@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -17,8 +17,10 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 
 import classes from "./Navbar.module.css";
+import Cart from "../Cart/Cart";
 
 const Navbar = () => {
+  const [openCart, setOpenCart] = useState(false);
   return (
     <>
       <AppBar position="static" sx={{ background: "#fff", color: "#000" }}>
@@ -77,7 +79,10 @@ const Navbar = () => {
               <SearchIcon />
               <PersonOutlineOutlinedIcon />
               <FavoriteBorderOutlinedIcon />
-              <Box className={classes.cartIcon}>
+              <Box
+                className={classes.cartIcon}
+                onClick={() => setOpenCart(!openCart)}
+              >
                 <ShoppingCartOutlinedIcon />
                 <span>0</span>
               </Box>
@@ -85,6 +90,7 @@ const Navbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
+      {openCart && <Cart />}
     </>
   );
 };
